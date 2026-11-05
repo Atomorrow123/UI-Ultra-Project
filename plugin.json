@@ -1,0 +1,17 @@
+{
+  // Antigravity plugin manifest
+  "name": "ui-ultra",
+  "displayName": "UI Ultra Project",
+  "description": "以秩序美学为底座、支持 12 大全行业自适应变形与 12 大殿堂级品牌先例借镜（Apple、Nike、McDonald's、Cartier、Aesop、Linear 等）的前端 UI 构建指南。",
+  "version": "1.2.0",
+  "author": { "name": "齐天大圣123 & Antigravity Agent", "url": "https://github.com/Atomorrow123" },
+  "homepage": "https://github.com/Atomorrow123/UI-Ultra-Project",
+  "repository": { "type": "git", "url": "https://github.com/Atomorrow123/UI-Ultra-Project" },
+  "logo": "assets/ui-ultra-logo.svg",
+  "suggestedPrompts": [
+    "用 UI Ultra 给我做一个 AI 写作工具的落地页",
+    "参考麦当劳和 Shake Shack 的风格，做一个精品汉堡点单页",
+    "参考 Cartier 和高定画册风格，做一个腕表典藏展陈页",
+    "按 UI Ultra 自检清单审查并优化当前页面的 UI"
+  ]
+}

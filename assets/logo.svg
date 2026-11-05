@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181B"/>
+      <stop offset="100%" stop-color="#09090B"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3D393"/>
+      <stop offset="50%" stop-color="#D4AF6A"/>
+      <stop offset="100%" stop-color="#9E7E46"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 建筑黑曜底盘 -->
+  <rect x="16" y="16" width="224" height="224" rx="48" fill="url(#bgGrad)"/>
+  <rect x="24" y="24" width="208" height="208" rx="40" fill="none" stroke="url(#goldGrad)" stroke-opacity="0.38" stroke-width="2"/>
+
+  <!-- 瑞士黄金分割秩序网格线 -->
+  <g stroke="#FAF8F5" stroke-opacity="0.10" stroke-width="1.5">
+    <line x1="16" y1="88" x2="240" y2="88"/>
+    <line x1="16" y1="168" x2="240" y2="168"/>
+    <line x1="88" y1="16" x2="88" y2="240"/>
+    <line x1="168" y1="16" x2="168" y2="240"/>
+  </g>
+
+  <!-- 左翼：UI 秩序立柱与主 U 弧线 -->
+  <path d="M72 68 V136 C72 166.9 97.1 192 128 192 C158.9 192 184 166.9 184 136 V108"
+        fill="none" stroke="#FAF8F5" stroke-width="22" stroke-linecap="square" stroke-linejoin="miter"/>
+
+  <!-- 右上翼：Ultra 多维折角棱镜与香槟金高光锚点 -->
+  <rect x="173" y="56" width="22" height="28" rx="4" fill="url(#goldGrad)"/>
+  <circle cx="128" cy="132" r="10" fill="url(#goldGrad)"/>
+</svg>
