@@ -135,8 +135,9 @@
       background: #16a34a;
     }
 
-    /* 按钮系统 */
+    /* 按钮与点击动效系统 */
     .btn {
+      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -149,26 +150,48 @@
       font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
-      transition: transform 140ms var(--ease-spring), background-color 140ms ease;
+      transition:
+        transform 220ms var(--ease-spring),
+        box-shadow 180ms ease,
+        background-color 140ms ease,
+        border-color 140ms ease;
+      will-change: transform;
     }
-    .btn:active { transform: scale(0.97); }
+    .btn:hover { transform: translateY(-2.5px) scale(1.02); }
+    .btn:active { transform: translateY(2px) scale(0.94); transition-duration: 50ms; }
     .btn-gold {
       background: var(--gold);
       color: var(--text-on-gold);
-      box-shadow: 0 4px 14px rgba(255, 188, 13, 0.32);
+      box-shadow: 0 4px 0 #c99000, 0 8px 18px rgba(255, 188, 13, 0.32);
     }
-    .btn-gold:hover { background: var(--gold-hover); }
+    .btn-gold:hover {
+      background: var(--gold-hover);
+      box-shadow: 0 6px 0 #c99000, 0 12px 24px rgba(255, 188, 13, 0.40);
+    }
+    .btn-gold:active {
+      box-shadow: 0 1px 0 #c99000 !important;
+    }
     .btn-outline {
       background: var(--surface);
       color: var(--text);
       border-color: var(--border-strong);
+      box-shadow: 0 3px 0 rgba(39, 37, 31, 0.08);
     }
     .btn-outline:hover { background: var(--surface-warm); }
     .btn-outline[aria-pressed="true"] {
       background: var(--text);
       color: var(--bg);
       border-color: var(--text);
+      box-shadow: 0 3px 0 rgba(0, 0, 0, 0.28);
     }
+
+    @keyframes ui-pop {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.12) rotate(-1.5deg); }
+      75%  { transform: scale(0.96) rotate(1deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+    .is-popping { animation: ui-pop 380ms var(--ease-spring); }
 
     /* Hero 食欲波普分栏 */
     .hero {
@@ -495,6 +518,32 @@
     let trayItems = 1;
     let trayTotal = 53;
 
+    function triggerPop(el) {
+      if (!el) return;
+      el.classList.remove('is-popping');
+      void el.offsetWidth;
+      el.classList.add('is-popping');
+    }
+
+    function spawnBurst(el, text) {
+      const r = el.getBoundingClientRect();
+      const tag = document.createElement('span');
+      tag.textContent = text;
+      tag.style.cssText = `
+        position:fixed; left:${r.left + r.width / 2}px; top:${r.top - 4}px;
+        transform:translate(-50%,0) scale(0.8); padding:4px 12px; border-radius:999px;
+        background:var(--gold); color:var(--text-on-gold); font-size:12px; font-weight:800;
+        pointer-events:none; z-index:9999; box-shadow:0 4px 12px rgba(0,0,0,0.2);
+        transition:transform 500ms cubic-bezier(0.22,1,0.36,1), opacity 500ms ease;
+      `;
+      document.body.appendChild(tag);
+      requestAnimationFrame(() => {
+        tag.style.transform = 'translate(-50%, -30px) scale(1.06)';
+        tag.style.opacity = '0';
+      });
+      setTimeout(() => tag.remove(), 520);
+    }
+
     function calcBurger() {
       let addPrice = 0;
       let addKcal = 0;
@@ -503,8 +552,12 @@
         addKcal += Number(chk.dataset.kcal);
       });
       const currentBurgerPrice = basePrice + addPrice;
-      document.getElementById('hero-price-btn').textContent = `¥${currentBurgerPrice.toFixed(2)}`;
-      document.getElementById('kcal-display').textContent = `约 ${baseKcal + addKcal} kcal`;
+      const priceEl = document.getElementById('hero-price-btn');
+      const kcalEl = document.getElementById('kcal-display');
+      priceEl.textContent = `¥${currentBurgerPrice.toFixed(2)}`;
+      kcalEl.textContent = `约 ${baseKcal + addKcal} kcal`;
+      triggerPop(document.querySelector('.burger-visual svg'));
+      triggerPop(kcalEl);
       return currentBurgerPrice;
     }
 
@@ -514,28 +567,37 @@
         basePrice = Number(btn.dataset.base);
         baseKcal = Number(btn.dataset.kcal);
         document.getElementById('current-combo-title').textContent = `当前定制：${btn.dataset.name}`;
+        spawnBurst(btn, `✓ ${btn.dataset.name}`);
         calcBurger();
       });
     });
 
     document.querySelectorAll('.addon-check').forEach(chk => {
-      chk.addEventListener('change', calcBurger);
+      chk.addEventListener('change', () => {
+        spawnBurst(chk.closest('.addon-item'), chk.checked ? `+¥${chk.dataset.price}` : '已移除');
+        calcBurger();
+      });
     });
 
-    function updateTray(addedPrice) {
+    function updateTray(addedPrice, sourceBtn) {
       trayItems++;
       trayTotal += addedPrice;
-      document.getElementById('tray-count').textContent = String(trayItems);
-      document.getElementById('tray-total').textContent = `¥ ${trayTotal.toFixed(2)}`;
+      const countEl = document.getElementById('tray-count');
+      const totalEl = document.getElementById('tray-total');
+      countEl.textContent = String(trayItems);
+      totalEl.textContent = `¥ ${trayTotal.toFixed(2)}`;
+      triggerPop(countEl);
+      triggerPop(totalEl);
+      if (sourceBtn) spawnBurst(sourceBtn, `+1 🍔 ¥${addedPrice.toFixed(0)}`);
     }
 
-    document.getElementById('add-main-btn').addEventListener('click', () => {
-      updateTray(calcBurger());
+    document.getElementById('add-main-btn').addEventListener('click', (e) => {
+      updateTray(calcBurger(), e.currentTarget);
     });
 
     document.querySelectorAll('.quick-add').forEach(btn => {
       btn.addEventListener('click', () => {
-        updateTray(Number(btn.dataset.price));
+        updateTray(Number(btn.dataset.price), btn);
         const orig = btn.textContent;
         btn.textContent = '已加购 ✓';
         setTimeout(() => { btn.textContent = orig; }, 900);
@@ -544,6 +606,7 @@
 
     document.getElementById('checkout-btn').addEventListener('click', function() {
       this.textContent = '✓ 厨房已接单 · 取餐号 #A082';
+      spawnBurst(this, '🔥 静安厨房现烤中');
     });
 
     document.getElementById('theme-toggle').addEventListener('click', () => {

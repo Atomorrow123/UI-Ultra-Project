@@ -99,8 +99,9 @@ UI Ultra 采用 **「双层架构」**：底层守住可读性与工程秩序，
 - **对比度硬指标**：正文 ≥ 4.5:1；大字、图标、**表单输入框边框与焦点环 ≥ 3:1**。品牌色做按钮底色时，单独校验其上文字的对比度（过浅的亮黄/珊瑚色按钮应配深色字，如 McDonald's 金黄按钮配深棕黑字）。
 - **原生双模支持**：`<head>` 声明 `<meta name="color-scheme" content="light dark">`，`:root` 设置 `color-scheme: light dark`，通过 `light-dark(亮, 暗)` 定义语义色。
 
-### 布局与组件 Layout & Components
+### 布局、组件与交互动效 Layout, Components & Motion
 - **打破套路构图**：用不对称分栏（5/7、4/8）、Bento 大小交错网格、杂志跨栏排版、或“产品即 Hero（直接嵌入可操作演示）”替代千篇一律的居中标题加三张等宽卡片。
+- **点击与交互动画必配**：所有按钮、胶囊选项（`.chip`）、分段控制器（`.segmented`）、Tab 切换与卡片必须具备清晰的物理动画反馈——包含 `:hover` 上浮（`translateY(-2px)`）、`:active` 瞬态按压回弹（`translateY(2px) scale(0.95)`，配合 `--ease-spring`）、点击水波纹或目标元素弹跳（`@keyframes ui-click-pop`）、面板切换渐显上浮（`@keyframes ui-panel-enter`）以及价格/数值变更时的平滑滚动跳字过渡。
 - **优先原生语义**：操作用 `<button>`，跳转用 `<a>`；弹窗优先用 `<dialog>`，下拉与轻提示用 `popover`；胶囊徽标与快捷键 `<kbd>` 必加 `white-space: nowrap; flex-shrink: 0`。
 
 ---

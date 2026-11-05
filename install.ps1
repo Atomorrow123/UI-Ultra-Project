@@ -11,7 +11,7 @@
 #>
 [CmdletBinding()]
 param(
-  [ValidateSet('auto','all','antigravity','gemini','cursor','codex','agents')]
+  [ValidateSet('auto','all','antigravity','gemini','cursor','codex','workbuddy','agents')]
   [string[]]$Agent = @('auto'),
   [ValidateSet('user','project')]
   [string]$Scope = 'user',
@@ -30,11 +30,12 @@ if (-not (Test-Path (Join-Path $Skill 'SKILL.md'))) { throw "SKILL.md not found 
 
 # agent -> (user skills dir, project skills dir, detection dir)
 $Targets = [ordered]@{
-  antigravity = @("$HomeDir\.gemini\config\plugins",        "$Cwd\.agents\skills",  "$HomeDir\.gemini\antigravity")
-  gemini      = @("$HomeDir\.gemini\skills",                "$Cwd\.gemini\skills",  "$HomeDir\.gemini")
-  cursor      = @("$HomeDir\.cursor\skills",                "$Cwd\.cursor\skills",  "$HomeDir\.cursor")
-  codex       = @("$HomeDir\.codex\skills",                 "$Cwd\.codex\skills",   "$HomeDir\.codex")
-  agents      = @("$HomeDir\.agents\skills",                "$Cwd\.agents\skills",  "$HomeDir\.agents")
+  antigravity = @("$HomeDir\.gemini\config\plugins",        "$Cwd\.agents\skills",      "$HomeDir\.gemini\antigravity")
+  gemini      = @("$HomeDir\.gemini\skills",                "$Cwd\.gemini\skills",      "$HomeDir\.gemini")
+  cursor      = @("$HomeDir\.cursor\skills",                "$Cwd\.cursor\skills",      "$HomeDir\.cursor")
+  codex       = @("$HomeDir\.codex\skills",                 "$Cwd\.codex\skills",       "$HomeDir\.codex")
+  workbuddy   = @("$HomeDir\.workbuddy\skills",             "$Cwd\.workbuddy\skills",   "$HomeDir\.workbuddy")
+  agents      = @("$HomeDir\.agents\skills",                "$Cwd\.agents\skills",      "$HomeDir\.agents")
 }
 
 function Install-To([string]$dir, [string]$label, [bool]$asPlugin) {

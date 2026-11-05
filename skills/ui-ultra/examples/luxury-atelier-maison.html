@@ -87,8 +87,10 @@
       color: var(--text);
     }
 
-    /* 0px 锋利直角按钮 */
+    /* 0px 锋利直角按钮 + 丝绸金线动效 */
     .btn-luxury {
+      position: relative;
+      overflow: hidden;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -101,7 +103,20 @@
       text-transform: uppercase;
       font-weight: 500;
       cursor: pointer;
-      transition: background-color 420ms var(--ease-theater), color 420ms var(--ease-theater), border-color 420ms var(--ease-theater);
+      transition:
+        transform 360ms var(--ease-theater),
+        background-color 420ms var(--ease-theater),
+        color 420ms var(--ease-theater),
+        border-color 420ms var(--ease-theater),
+        box-shadow 420ms var(--ease-theater);
+    }
+    .btn-luxury:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(194, 160, 98, 0.16);
+    }
+    .btn-luxury:active {
+      transform: translateY(1px) scale(0.97);
+      transition-duration: 80ms;
     }
     .btn-luxury--primary {
       background: var(--gold);
@@ -121,6 +136,13 @@
       background: var(--surface);
       color: var(--gold);
       border-color: var(--gold);
+    }
+    #watch-svg {
+      transition: transform 680ms var(--ease-theater), filter 480ms var(--ease-theater);
+    }
+    #watch-svg.is-rotating {
+      transform: rotate(45deg) scale(1.05);
+      filter: drop-shadow(0 0 18px rgba(194, 160, 98, 0.35));
     }
 
     /* 外露瑞士网格主画布 */
@@ -391,7 +413,8 @@
   </main>
 
   <script>
-    // 材质版本切换
+    // 材质版本切换 + 机芯几何旋转动效
+    let watchAngle = 0;
     document.querySelectorAll('.edition-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.edition-btn').forEach(b => b.setAttribute('aria-selected', String(b === btn)));
@@ -400,7 +423,11 @@
         document.getElementById('spec-reserve').textContent = btn.dataset.reserve;
         document.getElementById('spec-limit').textContent = btn.dataset.limit;
         const color = btn.dataset.stroke;
-        document.querySelectorAll('#watch-svg [stroke]').forEach(el => el.setAttribute('stroke', color));
+        const svg = document.getElementById('watch-svg');
+        svg.querySelectorAll('[stroke]').forEach(el => el.setAttribute('stroke', color));
+        watchAngle += 45;
+        svg.style.transform = `rotate(${watchAngle}deg) scale(1.04)`;
+        setTimeout(() => { svg.style.transform = `rotate(${watchAngle}deg) scale(1)`; }, 420);
       });
     });
 

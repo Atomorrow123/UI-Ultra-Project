@@ -14,6 +14,7 @@
 
 ```css
 .btn {
+  position: relative; overflow: hidden;
   display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
   min-height: 40px; padding: 0 var(--space-4);
   font: var(--weight-medium) var(--text-sm)/1.2 var(--font-body);
@@ -23,10 +24,16 @@
   cursor: pointer; white-space: nowrap;
   transition: background-color var(--duration-fast) var(--ease-out),
               border-color var(--duration-fast) var(--ease-out),
-              transform var(--duration-fast) var(--ease-out);
+              box-shadow var(--duration-base) var(--ease-out),
+              transform 220ms var(--ease-spring);
+}
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 .btn:active:not(:disabled) {
-  transform: translateY(calc(var(--btn-depth, 0px) * 0.5)) scale(0.98);
+  transform: translateY(calc(2px + var(--btn-depth, 0px) * 0.5)) scale(0.95);
+  transition-duration: 60ms;
 }
 .btn:disabled, .btn[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
 
