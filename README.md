@@ -4,7 +4,7 @@
 
 <h1 align="center">UI Ultra Project (v1.2)</h1>
 
-<p align="center">以秩序美学为底座、支持 12 大全行业自适应变形与 12 大殿堂级品牌先例借镜的前端 UI 构建指南</p>
+<p align="center">自适应前端 UI 构建指南Skill</p>
 
 <p align="center">
   <a href="https://github.com/Atomorrow123/UI-Ultra-Project">GitHub</a> ·
@@ -33,8 +33,8 @@
 
 **UI Ultra Project** 是一个 [Agent Skill](https://agentskills.io)（`SKILL.md` 标准格式）。它采用 **「底层秩序守恒 + 表层万象自适应」** 的双层架构：
 
-- **底层（UI Ultra Core · 秩序底座）**：守住语义化 Token、排版亲密性、对齐线、精致中西混排、WCAG 对比度与完整交互状态，彻底杜绝廉价的“AI 紫蓝发光模板味”。
-- **表层（全行业自适应引擎）**：彻底放开呆板限制，向 **Apple、Nike、McDonald's、Cartier、Aesop、Linear、Stripe、Airbnb、Teenage Engineering、MoMA、Duolingo、Kinfolk** 等 12 个殿堂级品牌先例汲取行业灵魂，覆盖 **食品、科技、艺术、哲学出版、服装奢品、生活服务、教育、金融、电商、流媒体、出行工业、公共服务** 12 大前端方向。
+- **底层**：守住语义化 Token、排版亲密性、对齐线、精致中西混排、WCAG 对比度与完整交互状态，彻底杜绝廉价的“AI 紫蓝发光模板味”。
+- **表层**：彻底放开呆板限制，覆盖 **食品、科技、艺术、哲学出版、服装奢品、生活服务、教育、金融、电商、流媒体、出行工业、公共服务** 12 大前端方向。
 
 精简后的三步闭环工作流：
 **定向与先例锚定（3 行简报） → Token 调谐与结构搭建（6 大旋钮） → 状态补齐与渲染核验**
